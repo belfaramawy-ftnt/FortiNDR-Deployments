@@ -71,13 +71,22 @@ variable "vm_image_ocid" {
 variable "instance_shape" {
   description = "Instance shape"
   type        = string
-  default     = "VM.Standard2.4"
+}
+
+variable "instance_ocpus" {
+  description = "Number of OCPUs for the instance"
+  type        = number
+}
+
+variable "instance_memory_in_gbs" {
+  description = "Amount of memory in GBs for the instance"
+  type        = number
 }
 
 variable "availability_domain" {
   description = "Availability domain"
-  type        = string
-  default     = "1"
+  type        = number
+  default     = 1
 }
 
 variable "ndr_license" {
