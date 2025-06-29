@@ -198,7 +198,7 @@ resource "oci_core_public_ip" "mgmt_ip" {
   compartment_id = var.compartment_ocid
   display_name   = "${var.vm_name}-public-ip"
   lifetime       = "RESERVED"
-  private_ip_id  = data.oci_core_vnic.fndr_primary_vnic.private_ip_id
+  private_ip_id  = data.oci_core_vnic.fndr_primary_vnic.private_ip[0]_id
 }
 
 # Reboot the instance after all attachments/configuration
