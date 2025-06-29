@@ -29,7 +29,6 @@ resource "oci_core_vcn" "fndr_vcn" {
   cidr_block     = var.vcn_cidr
   compartment_id = var.compartment_ocid
   display_name   = var.vcn_name
-  dns_label      = replace(lower(var.vcn_name), "/[^a-z0-9]/", "")
 }
 
 # Create Internet Gateway
@@ -111,7 +110,6 @@ resource "oci_core_subnet" "fndr_mgmt_subnet" {
   compartment_id      = var.compartment_ocid
   vcn_id              = oci_core_vcn.fndr_vcn.id
   display_name        = var.mgmt_subnet_name
-  dns_label           = replace(lower(var.mgmt_subnet_name), "/[^a-z0-9]/", "")
   security_list_ids   = [oci_core_security_list.fndr_mgmt_seclist.id]
   route_table_id      = oci_core_route_table.fndr_public_rt.id
   prohibit_public_ip_on_vnic = false
@@ -124,7 +122,6 @@ resource "oci_core_subnet" "fndr_sniffer_subnet" {
   compartment_id      = var.compartment_ocid
   vcn_id              = oci_core_vcn.fndr_vcn.id
   display_name        = var.sniffer_subnet_name
-  dns_label           = replace(lower(var.sniffer_subnet_name), "/[^a-z0-9]/", "")
   security_list_ids   = [oci_core_security_list.fndr_sniffer_seclist.id]
   route_table_id      = oci_core_route_table.fndr_private_rt.id
   prohibit_public_ip_on_vnic = true
@@ -145,7 +142,6 @@ resource "oci_core_instance" "fndr_sensor" {
     subnet_id              = oci_core_subnet.fndr_mgmt_subnet.id
     display_name           = "${var.vm_name}-mgmt-vnic"
     assign_public_ip       = true
-    hostname_label         = replace(lower(var.vm_name), "/[^a-z0-9]/", "")
   }
 
   source_details {
