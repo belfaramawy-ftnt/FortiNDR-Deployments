@@ -99,3 +99,4 @@ variable "data_disk_size" {
   description = "Size of data disk in GB"
   type        = number
   default     = 1024
+}
