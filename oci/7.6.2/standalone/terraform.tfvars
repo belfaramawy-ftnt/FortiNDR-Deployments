@@ -1,10 +1,10 @@
 # OCI Authentication
 region = "us-ashburn-1"
 tenancy_ocid = "ocid1.tenancy.oc1..aaaaaaaaxxxxx"
-user_ocid = "ocid1.user.oc1..aaaaaaaaxxxxx"
-fingerprint = "xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx"
-private_key_path = "~/.oci/oci_api_key.pem"
 compartment_ocid = "ocid1.compartment.oc1..aaaaaaaaxxxxx"
+# user_ocid = "ocid1.user.oc1..aaaaaaaaxxxxx"
+# fingerprint = "xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx"
+# private_key_path = "~/.oci/oci_api_key.pem"
 
 # Resource Names
 vm_name = "fndr-sensor-01"
