@@ -182,3 +182,21 @@ resource "oci_core_volume_attachment" "fndr_data_attachment" {
   volume_id       = oci_core_volume.fndr_data_volume.id
   display_name    = "${var.vm_name}-data-attachment"
 }
+
+# Restart VM after disk and VNIC attachments
+resource "null_resource" "restart_vm" {
+  depends_on = [
+    oci_core_volume_attachment.fndr_data_attachment,
+    oci_core_vnic_attachment.fndr_sniffer_vnic
+  ]
+
+  provisioner "local-exec" {
+    command = "oci compute instance action --instance-id ${oci_core_instance.fndr_sensor.id} --action STOP --region ${var.region} && sleep 30 && oci compute instance action --instance-id ${oci_core_instance.fndr_sensor.id} --action START --region ${var.region}"
+  }
+
+  triggers = {
+    instance_id = oci_core_instance.fndr_sensor.id
+    volume_attachment = oci_core_volume_attachment.fndr_data_attachment.id
+    vnic_attachment = oci_core_vnic_attachment.fndr_sniffer_vnic.id
+  }
+}
