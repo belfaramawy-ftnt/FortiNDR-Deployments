@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    oci = {
+      source  = "hashicorp/oci"
+      version = ">= 7.7.0"
+    }
+  }
+}
+
 # Get availability domain
 data "oci_identity_availability_domains" "ads" {
   compartment_id = var.tenancy_ocid
