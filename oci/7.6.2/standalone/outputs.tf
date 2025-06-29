@@ -20,7 +20,7 @@ output "d_password" {
 
 output "e_mgmt_public_ip" {
   description = "Public IP address of the VM"
-  value       = oci_core_instance.fndr_sensor.public_ip
+  value       = oci_core_public_ip.mgmt_ip.ip_address
 }
 
 output "f_mgmt_private_ip" {
