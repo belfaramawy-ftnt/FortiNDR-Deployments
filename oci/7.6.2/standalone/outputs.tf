@@ -32,8 +32,3 @@ output "g_sniffer_private_ip" {
   description = "Private IP address of the sniffer interface"
   value       = data.oci_core_vnic.sniffer_vnic.private_ip_address
 }
-
-# Data source to get sniffer VNIC details
-data "oci_core_vnic" "sniffer_vnic" {
-  vnic_id = oci_core_vnic_attachment.fndr_sniffer_vnic.vnic_id
-}
