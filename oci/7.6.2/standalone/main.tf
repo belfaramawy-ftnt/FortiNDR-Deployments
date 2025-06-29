@@ -38,13 +38,6 @@ resource "oci_core_internet_gateway" "fndr_igw" {
   display_name   = "${var.vcn_name}-igw"
 }
 
-# Create NAT Gateway
-resource "oci_core_nat_gateway" "fndr_nat" {
-  compartment_id = var.compartment_ocid
-  vcn_id         = oci_core_vcn.fndr_vcn.id
-  display_name   = "${var.vcn_name}-nat"
-}
-
 # Create Security List for Management (allows all traffic)
 resource "oci_core_security_list" "fndr_mgmt_seclist" {
   compartment_id = var.compartment_ocid
@@ -96,11 +89,6 @@ resource "oci_core_route_table" "fndr_private_rt" {
   compartment_id = var.compartment_ocid
   vcn_id         = oci_core_vcn.fndr_vcn.id
   display_name   = "${var.vcn_name}-private-rt"
-
-  route_rules {
-    destination       = "0.0.0.0/0"
-    network_entity_id = oci_core_nat_gateway.fndr_nat.id
-  }
 }
 
 # Create Public Subnet for Management
@@ -112,7 +100,7 @@ resource "oci_core_subnet" "fndr_mgmt_subnet" {
   display_name        = var.mgmt_subnet_name
   security_list_ids   = [oci_core_security_list.fndr_mgmt_seclist.id]
   route_table_id      = oci_core_route_table.fndr_public_rt.id
-  prohibit_public_ip_on_vnic = false
+  dns_label           = "Management"
 }
 
 # Create Private Subnet for Sniffer
@@ -124,6 +112,7 @@ resource "oci_core_subnet" "fndr_sniffer_subnet" {
   display_name        = var.sniffer_subnet_name
   security_list_ids   = [oci_core_security_list.fndr_sniffer_seclist.id]
   route_table_id      = oci_core_route_table.fndr_private_rt.id
+  dns_label           = "Sniffer"
   prohibit_public_ip_on_vnic = true
 }
 
@@ -195,25 +184,4 @@ resource "oci_core_public_ip" "mgmt_ip" {
   display_name   = "${var.vm_name}-public-ip"
   lifetime       = "RESERVED"
   private_ip_id  = data.oci_core_private_ips.mgmt_private_ips.private_ips[0].id
-}
-
-# Manage instance lifecycle: reboot after create, shutdown before destroy
-resource "null_resource" "manage_sensor" {
-  triggers = {
-    instance_id = oci_core_instance.fndr_sensor.id
-  }
-
-  provisioner "local-exec" {
-    when    = create
-    command = "oci compute instance action --instance-id ${self.triggers.instance_id} --action SOFTRESET"
-  }
-
-  provisioner "local-exec" {
-    when    = destroy
-    command = <<EOT
-oci compute instance action --instance-id ${self.triggers.instance_id} --action SOFTSTOP
-# wait until the instance is stopped
-while [ "$(oci compute instance get --instance-id ${self.triggers.instance_id} --query 'data.lifecycle-state' --raw-output)" != "STOPPED" ]; do sleep 5; done
-EOT
-  }
 }
