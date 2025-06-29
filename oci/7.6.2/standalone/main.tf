@@ -207,3 +207,4 @@ resource "null_resource" "reboot_sensor" {
   provisioner "local-exec" {
     command = "oci compute instance action --instance-id ${oci_core_instance.fndr_sensor.id} --action SOFTRESET"
   }
+}
