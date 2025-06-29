@@ -194,9 +194,4 @@ resource "null_resource" "restart_vm" {
     command = "oci compute instance action --instance-id ${oci_core_instance.fndr_sensor.id} --action STOP --region ${var.region} && sleep 30 && oci compute instance action --instance-id ${oci_core_instance.fndr_sensor.id} --action START --region ${var.region}"
   }
 
-  triggers = {
-    instance_id = oci_core_instance.fndr_sensor.id
-    volume_attachment = oci_core_volume_attachment.fndr_data_attachment.id
-    vnic_attachment = oci_core_vnic_attachment.fndr_sniffer_vnic.id
-  }
 }
