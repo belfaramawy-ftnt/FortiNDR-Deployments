@@ -26,15 +26,4 @@ output "username" {
 output "password" {
   description = "Password (VM OCID)"
   value       = oci_core_instance.fndr_sensor.id
-  sensitive   = true
-}
-
-output "vm_ocid" {
-  description = "OCID of the VM"
-  value       = oci_core_instance.fndr_sensor.id
-}
-
-# Data source to get sniffer VNIC details
-data "oci_core_vnic" "sniffer_vnic" {
-  vnic_id = oci_core_vnic_attachment.fndr_sniffer_vnic.vnic_id
 }
