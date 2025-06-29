@@ -1,20 +1,3 @@
-terraform {
-  required_providers {
-    oci = {
-      source  = "oracle/oci"
-      version = "~> 4.0"
-    }
-  }
-}
-
-provider "oci" {
-  tenancy_ocid     = var.tenancy_ocid
-  # user_ocid        = var.user_ocid
-  # fingerprint      = var.fingerprint
-  # private_key_path = var.private_key_path
-  region          = var.region
-}
-
 # Get availability domain
 data "oci_identity_availability_domains" "ads" {
   compartment_id = var.tenancy_ocid
@@ -130,7 +113,9 @@ resource "oci_core_instance" "fndr_sensor" {
   create_vnic_details {
     subnet_id              = oci_core_subnet.fndr_mgmt_subnet.id
     display_name           = "${var.vm_name}-mgmt-vnic"
+    skip_source_dest_check = false
     assign_public_ip       = false
+    private_ip             = "${var.mgmt_private_ip}"
   }
 
   source_details {
@@ -146,12 +131,16 @@ resource "oci_core_instance" "fndr_sensor" {
 
 # Create secondary VNIC for sniffer
 resource "oci_core_vnic_attachment" "fndr_sniffer_vnic" {
+  depends_on  = ["oci_core_instance.fndr_sensor"]
   instance_id = oci_core_instance.fndr_sensor.id
+  display_name     = "${var.vm_name}-sniffer-vnic"
   
   create_vnic_details {
     subnet_id        = oci_core_subnet.fndr_sniffer_subnet.id
     display_name     = "${var.vm_name}-sniffer-vnic"
+    skip_source_dest_check  = false
     assign_public_ip = false
+    private_ip       = "${var.sniffer_private_ip}"
   }
 }
 
