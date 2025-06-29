@@ -1,3 +1,8 @@
+output "deployment_notice" {
+  description = "Important deployment information"
+  value       = "⚠️  WAIT 2-3 minutes after deployment completes, then access FortiNDR UI at: https://${oci_core_instance.fndr_sensor.public_ip}"
+}
+
 output "vm_name" {
   description = "Name of the VM"
   value       = oci_core_instance.fndr_sensor.display_name
