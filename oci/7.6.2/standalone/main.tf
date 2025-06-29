@@ -136,6 +136,10 @@ resource "oci_core_instance" "fndr_sensor" {
   compartment_id      = var.compartment_ocid
   display_name        = var.vm_name
   shape               = var.instance_shape
+  shape_config {
+    ocpus         = var.instance_ocpus
+    memory_in_gbs = var.instance_memory_in_gbs
+  }
 
   create_vnic_details {
     subnet_id              = oci_core_subnet.fndr_mgmt_subnet.id
