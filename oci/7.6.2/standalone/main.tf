@@ -129,7 +129,7 @@ resource "oci_core_instance" "fndr_sensor" {
 
 # Create secondary VNIC for sniffer
 resource "oci_core_vnic_attachment" "fndr_sniffer_vnic" {
-  depends_on  = oci_core_instance.fndr_sensor
+  depends_on  = [oci_core_instance.fndr_sensor]
   instance_id = oci_core_instance.fndr_sensor.id
   display_name     = "${var.vm_name}-sniffer-vnic"
   
