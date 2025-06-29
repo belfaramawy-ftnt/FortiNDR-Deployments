@@ -183,12 +183,22 @@ resource "oci_core_volume_attachment" "fndr_data_attachment" {
   display_name    = "${var.vm_name}-data-attachment"
 }
 
+# Get primary VNIC details
+data "oci_core_vnic_attachments" "fndr_vnics" {
+  compartment_id      = var.compartment_ocid
+  instance_id         = oci_core_instance.fndr_sensor.id
+}
+
+data "oci_core_vnic" "fndr_primary_vnic" {
+  vnic_id = data.oci_core_vnic_attachments.fndr_vnics.vnic_attachments[0].vnic_id
+}
+
 # Reserve Public IP for MGMT VNIC
 resource "oci_core_public_ip" "mgmt_ip" {
   compartment_id = var.compartment_ocid
   display_name   = "${var.vm_name}-public-ip"
   lifetime       = "RESERVED"
-  private_ip_id  = oci_core_instance.fndr_sensor.private_ip_id
+  private_ip_id  = data.oci_core_vnic.fndr_primary_vnic.private_ip_id
 }
 
 # Reboot the instance after all attachments/configuration
