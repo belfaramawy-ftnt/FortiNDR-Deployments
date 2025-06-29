@@ -63,6 +63,14 @@ variable "sniffer_subnet_cidr" {
   type        = string
 }
 
+variable "mgmt_private_ip" {
+  type        = string
+}
+
+variable "sniffer_private_ip" {
+  type        = string
+}
+
 variable "vm_image_ocid" {
   description = "OCID of the VM image"
   type        = string
