@@ -83,7 +83,6 @@ resource "oci_core_subnet" "fndr_mgmt_subnet" {
   display_name        = var.mgmt_subnet_name
   security_list_ids   = [oci_core_security_list.fndr_mgmt_seclist.id]
   route_table_id      = oci_core_route_table.fndr_public_rt.id
-  dns_label           = "Management"
 }
 
 # Create Private Subnet for Sniffer
@@ -95,7 +94,6 @@ resource "oci_core_subnet" "fndr_sniffer_subnet" {
   display_name        = var.sniffer_subnet_name
   security_list_ids   = [oci_core_security_list.fndr_sniffer_seclist.id]
   route_table_id      = oci_core_route_table.fndr_private_rt.id
-  dns_label           = "Sniffer"
   prohibit_public_ip_on_vnic = true
 }
 
