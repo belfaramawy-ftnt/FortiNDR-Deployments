@@ -8,20 +8,20 @@ variable "tenancy_ocid" {
   type        = string
 }
 
-variable "user_ocid" {
-  description = "User OCID"
-  type        = string
-}
+#variable "user_ocid" {
+#  description = "User OCID"
+#  type        = string
+#}
 
-variable "fingerprint" {
-  description = "Key fingerprint"
-  type        = string
-}
+#variable "fingerprint" {
+#  description = "Key fingerprint"
+#  type        = string
+#}
 
-variable "private_key_path" {
-  description = "Path to private key"
-  type        = string
-}
+#variable "private_key_path" {
+#  description = "Path to private key"
+#  type        = string
+#}
 
 variable "compartment_ocid" {
   description = "Compartment OCID"
