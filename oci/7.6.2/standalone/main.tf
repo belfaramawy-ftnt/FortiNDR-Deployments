@@ -196,3 +196,25 @@ resource "oci_core_public_ip" "mgmt_ip" {
   lifetime       = "RESERVED"
   private_ip_id  = data.oci_core_private_ips.mgmt_private_ips.private_ips[0].id
 }
+
+# Manage instance lifecycle: reboot after create, shutdown before destroy
+data "null_data_source" "dummy" {}
+resource "null_resource" "manage_sensor" {
+  triggers = {
+    instance = oci_core_instance.fndr_sensor.id
+  }
+
+  provisioner "local-exec" {
+    when    = "create"
+    command = "oci compute instance action --instance-id ${oci_core_instance.fndr_sensor.id} --action SOFTRESET"
+  }
+
+  provisioner "local-exec" {
+    when = "destroy"
+    command = <<EOT
+oci compute instance action --instance-id ${oci_core_instance.fndr_sensor.id} --action SOFTSTOP
+# wait until the instance is stopped
+while [ \"$(oci compute instance get --instance-id ${oci_core_instance.fndr_sensor.id} --query 'data.lifecycle-state' --raw-output)\" != \"STOPPED\" ]; do sleep 5; done
+EOT
+  }
+}
