@@ -197,13 +197,13 @@ resource "oci_core_public_ip" "mgmt_ip" {
   private_ip_id  = data.oci_core_private_ips.mgmt_private_ips.private_ips[0].id
 }
 
-# Reboot the instance after all attachments/configuration
-resource "oci_core_instance_action" "reboot_sensor" {
-  instance_id = oci_core_instance.fndr_sensor.id
-  action      = "SOFTRESET"
+# Reboot instance after provisioning (doesn't affect destroy)
+resource "null_resource" "reboot_sensor" {
   depends_on = [
     oci_core_vnic_attachment.fndr_sniffer_vnic,
     oci_core_volume_attachment.fndr_data_attachment,
     oci_core_public_ip.mgmt_ip
   ]
-}
+  provisioner "local-exec" {
+    command = "oci compute instance action --instance-id ${oci_core_instance.fndr_sensor.id} --action SOFTRESET"
+  }
