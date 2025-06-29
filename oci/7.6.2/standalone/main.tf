@@ -188,12 +188,7 @@ resource "oci_core_public_ip" "mgmt_ip" {
   compartment_id = var.compartment_ocid
   display_name   = "${var.vm_name}-public-ip"
   lifetime       = "RESERVED"
-}
-
-# Assign reserved public IP to primary VNIC
-resource "oci_core_public_ip_attachment" "mgmt_ip_attachment" {
-  public_ip_id = oci_core_public_ip.mgmt_ip.id
-  vnic_id      = oci_core_instance.fndr_sensor.primary_vnic_id
+  vnic_id        = oci_core_instance.fndr_sensor.primary_vnic_id
 }
 
 # Reboot the instance after all attachments/configuration
@@ -203,6 +198,6 @@ resource "oci_core_instance_action" "reboot_sensor" {
   depends_on = [
     oci_core_vnic_attachment.fndr_sniffer_vnic,
     oci_core_volume_attachment.fndr_data_attachment,
-    oci_core_public_ip_attachment.mgmt_ip_attachment
+    oci_core_public_ip.mgmt_ip
   ]
 }
