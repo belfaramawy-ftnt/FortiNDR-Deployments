@@ -19,4 +19,6 @@ sniffer_subnet_cidr = "10.99.75.0/24"
 
 # VM Configuration
 vm_image_ocid = "ocid1.image.oc1.me-riyadh-1.aaaaaaaanehepwi7bmfemebw6udyomhjy5rvcgbn6de4bgb6no44odtqv75a"
-instance_shape = "VM.Standard2.4"
+instance_shape = "VM.Standard3.Flex"
+instance_ocpus = 32
+instance_memory_in_gbs = 128
