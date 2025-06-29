@@ -16,7 +16,6 @@ output "c_username" {
 output "d_password" {
   description = "Password (VM OCID)"
   value       = oci_core_instance.fndr_sensor.id
-  sensitive   = true
 }
 
 output "e_mgmt_public_ip" {
