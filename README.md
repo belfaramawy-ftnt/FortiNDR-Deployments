@@ -1,3 +1,3 @@
-# fndr-deployments
+# FortiNDR-Deployments
 
 In Progress...
