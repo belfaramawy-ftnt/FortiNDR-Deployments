@@ -23,7 +23,7 @@ mgmt_private_ip = "10.99.70.100"
 sniffer_private_ip = "10.99.75.100"
 
 # VM Configuration
-vm_image_ocid = "ocid1.image.oc1.me-riyadh-1.aaaaaaaanehepwi7bmfemebw6udyomhjy5rvcgbn6de4bgb6no44odtqv75a"
+vm_image_ocid = "https://objectstorage.me-riyadh-1.oraclecloud.com/p/5YSMpgiEn1rMTAtElPlU7waJCLQfb2vp1RdsYTVvjqFDLir4T3oAi99482ioRLOf/n/fortinetoraclecloud1/b/fndr-762/o/NDR-Sensor-762-image"
 instance_shape = "VM.Standard3.Flex"
 instance_ocpus = 32
 instance_memory_in_gbs = 128
