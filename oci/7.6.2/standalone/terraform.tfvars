@@ -1,6 +1,6 @@
 # Local Authentication
 region = "me-riyadh-1"
-tenancy_ocid = "ocid1.tenancy.oc1..aaaaaaaambr3uzztoyhweohbzqqdo775h7d3t54zpmzkp4b2cf35vs55ck3a"Add commentMore actions
+tenancy_ocid = "ocid1.tenancy.oc1..aaaaaaaambr3uzztoyhweohbzqqdo775h7d3t54zpmzkp4b2cf35vs55ck3a"
 compartment_ocid = "ocid1.compartment.oc1..aaaaaaaaefwplsi4eu2xqlwnwkg4eise64nu7qwjhswgwf7qxpajkkdroi6a"
 
 # Remote Authentication
