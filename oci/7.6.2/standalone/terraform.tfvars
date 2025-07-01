@@ -1,7 +1,10 @@
-# OCI Authentication
+# Local Authentication
 region = "me-riyadh-1"
-tenancy_ocid = "ocid1.tenancy.oc1..aaaaaaaambr3uzztoyhweohbzqqdo775h7d3t54zpmzkp4b2cf35vs55ck3a"
-compartment_ocid = "ocid1.compartment.oc1..aaaaaaaaefwplsi4eu2xqlwnwkg4eise64nu7qwjhswgwf7qxpajkkdroi6a"
+tenancy_ocid = "ocid1.tenancy.oc1.."
+compartment_ocid = "ocid1.compartment.oc1.."
+
+# Remote Authentication
+
 # user_ocid = "ocid1.user.oc1..aaaaaaaaxxxxx"
 # fingerprint = "xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx:xx"
 # private_key_path = "~/.oci/oci_api_key.pem"
