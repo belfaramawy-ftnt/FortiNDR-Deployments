@@ -8,6 +8,8 @@ variable "tenancy_ocid" {
   type        = string
 }
 
+# Remote Auth
+
 #variable "user_ocid" {
 #  description = "User OCID"
 #  type        = string
@@ -97,11 +99,11 @@ variable "availability_domain" {
   default     = 1
 }
 
-variable "ndr_license" {
-  description = "Path to NDR license file"
-  type        = string
-  default     = "./license/ndrlicenseexample.lic"
-}
+#variable "ndr_license" {
+#  description = "Path to NDR license file"
+#  type        = string
+#  default     = "./license/ndrlicenseexample.lic"
+#}
 
 variable "data_disk_size" {
   description = "Size of data disk in GB"
